@@ -7,7 +7,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                {% for (endpoint, label) in [('users_app.list', 'Users'), ('articles_app.list', 'Articles'), ('auth_app.register', 'Register')] %}
+                {% for (endpoint, label) in [
+                    ('users_app.list', 'Users'),
+                    ('articles_app.list', 'Articles'),
+                    ('authors_app.list', 'Authors'),
+                ] %}
                 <a href="{{ url_for(endpoint) }}" class="nav-link {% if request.endpoint == endpoint -%}active{%- endif %}">
                 {{ label }}
                 </a>
@@ -16,11 +20,12 @@
         </div>
         <div class="navbar-nav ms-auto">
             {% if current_user.is_authenticated %}
-            <a class="nav-link" href="{{ url_for('auth_app.logout') }}">Logout</a>
+            <a class="nav-link" href=" {{ url_for('auth_app.logout') }}">Logout</a>
             {% else %}
             <a href="{{ url_for('auth_app.login') }}" class="nav-link {% if request.endpoint == 'auth_app.login' -%}active{%- endif %}">
             Login
             </a>
+            <a class="nav-link" href="{{ url_for('auth_app.register') }}">Register</a>
             {% endif %}
         </div>
     </div>
