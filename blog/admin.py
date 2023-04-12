@@ -7,20 +7,20 @@ from blog import models
 from blog.models.database import db
 
 
-class MyAdminIndexView(AdminIndexView):
-    @expose("/")
-    def index(self):
-        if not (current_user.is_authenticated and current_user.is_staff):
-            return redirect(url_for("auth_app.login"))
-        return super(MyAdminIndexView, self).index()
-
-
 class CustomView(ModelView):
     def is_accessible(self):
         return current_user.is_authenticated and current_user.is_staff
 
     def inaccessible_callback(self, name, **kwargs):
         return redirect(url_for("auth_app.login"))
+
+
+class MyAdminIndexView(AdminIndexView):
+    @expose("/")
+    def index(self):
+        if not (current_user.is_authenticated and current_user.is_staff):
+            return redirect(url_for("auth_app.login"))
+        return super(MyAdminIndexView, self).index()
 
 
 class TagAdminView(CustomView):
@@ -46,7 +46,11 @@ class UserAdminView(CustomView):
     can_delete = True
 
 
-admin = Admin(name="Blog Admin", template_mode="bootstrap4")
+admin = Admin(
+    name="Blog Admin",
+    index_view=MyAdminIndexView(),
+    template_mode="bootstrap4",
+)
 
 admin.add_view(CustomView(models.Tag, db.session, category="Models"))
 admin.add_view(CustomView(models.Article, db.session, category="Models"))

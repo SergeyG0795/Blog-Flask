@@ -48,7 +48,7 @@ def create_article():
             author = Author(user_id=current_user.id)
             db.session.add(author)
             db.session.flush()
-            article.author = current_user.author
+            article.author_id = current_user.id
         try:
             db.session.commit()
         except IntegrityError:
