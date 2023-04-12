@@ -8,10 +8,11 @@ from blog.schemas import AuthorSchema
 
 class AuthorDetailEvents(EventsResource):
     def event_get_articles_count(self, **kwargs):
-        return {"count": Article.query.filter_by(Article.author_id == kwargs["id"]).count()}
+        return {"count": Article.query.filter(Article.author_id == kwargs["id"]).count()}
+
 
 class AuthorList(ResourceList):
-    events = AuthorDetailEvents
+
     schema = AuthorSchema
     data_layer = {
         "session": db.session,
@@ -20,6 +21,7 @@ class AuthorList(ResourceList):
 
 
 class AuthorDetail(ResourceDetail):
+    events = AuthorDetailEvents
     schema = AuthorSchema
     data_layer = {
         "session":db.session,

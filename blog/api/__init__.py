@@ -2,6 +2,7 @@ from combojsonapi.event import EventPlugin
 from combojsonapi.permission import PermissionPlugin
 from flask_combo_jsonapi import Api
 
+from blog.api.article import ArticleList, ArticleDetail
 from blog.api.author import AuthorList, AuthorDetail
 from blog.api.tag import TagList, TagDetail
 from combojsonapi.spec import ApiSpecPlugin
@@ -41,5 +42,7 @@ def init_api(app):
     api.route(TagDetail, "tag_detail", "/api/tags/", tag="Tag")
     api.route(UserList, "user_list", "/api/users/", tag="User")
     api.route(UserDetail, "user_detail", "/api/users/<int:id>/", tag="User")
+    api.route(ArticleList, "article_list", "/api/articles/", tag="Article")
+    api.route(ArticleDetail, "article_detail", "/api/articles/<int:id>/", tag="Article")
     api.route(AuthorList, "author_list", "/api/authors/", tag="Author")
     api.route(AuthorDetail, "author_detail", "/api/authors/<int:id>/", tag="Author")
