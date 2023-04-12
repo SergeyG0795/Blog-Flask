@@ -1,3 +1,5 @@
+from combojsonapi.event import EventPlugin
+from combojsonapi.permission import PermissionPlugin
 from flask_combo_jsonapi import Api
 
 from blog.api.author import AuthorList, AuthorDetail
@@ -23,11 +25,15 @@ def create_api_spec_plugin(app):
 
 
 def init_api(app):
+    event_plugin = EventPlugin()
     api_spec_plugin = create_api_spec_plugin(app)
+    permission_plugin = PermissionPlugin(strict=False)
     api = Api(
         app,
         plugins=[
+            event_plugin,
             api_spec_plugin,
+            permission_plugin
         ],
     )
 

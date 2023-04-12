@@ -2,6 +2,7 @@ from flask_rest_jsonapi import ResourceList, ResourceDetail
 
 from blog.models import User
 from blog.models.database import db
+from blog.permissions.user import UserPermission
 from blog.schemas import UserSchema
 
 
@@ -18,4 +19,5 @@ class UserDetail(ResourceDetail):
     data_layer = {
         "session": db.session,
         "model": User,
+        "permission_get": [UserPermission]
     }
