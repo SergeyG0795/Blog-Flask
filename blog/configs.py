@@ -15,13 +15,13 @@ class BaseConfig(object):
 
 
 class DevConfig(BaseConfig):
-    DEBUGGER = True
+    DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
 
 
 class ProductionConfig(BaseConfig):
-    DEBUGGER = True
-
+    SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
+    SECRET_KEY = os.environ.get("SECRET_KEY")
 
 class TestingConfig(BaseConfig):
     TESTING = True
